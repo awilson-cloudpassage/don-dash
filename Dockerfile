@@ -1,5 +1,4 @@
-# Install all the things
-FROM ubuntu:15.04
+FROM ubuntu:16.04
 MAINTAINER Ash Wilson
 
 #########
