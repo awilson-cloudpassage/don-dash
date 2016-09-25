@@ -40,7 +40,7 @@ class SecurityReporter(object):
         # Process and print scan results
         self.print_pretty_scans(raw_scan_results)
         for raw_scan_result in raw_scan_results:
-            if raw_scan_results["scan"]["critical_findings_count"] != 0:
+            if raw_scan_result["scan"]["critical_findings_count"] != 0:
                 sys.exit(2)
         return
 
