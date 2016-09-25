@@ -6,3 +6,4 @@ sleep 10
 export AGENT_ID=`cat /opt/cloudpassage/data/id`
 
 python /app/self_assessment.py
+exit $?
