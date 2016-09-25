@@ -1,10 +1,16 @@
 sudo: required
-
 services:
-    - docker
-
+  - docker
 before_install:
-    - docker build -t don-dash .
-
+    - docker build -t $DOCKER_IMAGE .
+after_success:
+  - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASSWORD
+  - docker push $DOCKER_IMAGE
 script:
-    - docker run -it --rm don-dash py.test
+  - docker run -it --rm $DOCKER_IMAGE py.test
+env:
+  matrix:
+  - DOCKER_IMAGE="awilson/don-dash:latest"
+  - secure: eErB50JNOAPE/7HVAWGzcFbCIQMvxZiqVFg+pa3CgrxW8n4wa3I9TIJVUwuE8LM4Xe2e0/CrKGeDu+8u3v7EBGv2GOD2Z/rOUfhIC2L61PagWU2IxqPqM3Uv/PR2fDJ9utkzXp+1JWMC8/p99ZFvShc0Kplr3r+d8NCJwl3siVzGFEolWNFsQ7FZqsyz8wJKVK5d/aoV/OaarJoEFh7FS5tay1qtOqs1Oo7ADLIxKRPH7WNk3UNNYDDj1joFbmPFUa254oF0ssMnGvEVYS6Kt1o65XCs8820QJjkHiSrWPzStWR+VUHeWMegaTiG1IMN4YuptU+1Gy4OHhTAM8erNhsQ7QGOpM2o+EVjZCleHAtzpdGnGqCaAdPTqJNizGxGVtaFx0UJfEoJuIBZ6eVmQhlrs+RutP+ANQADJANr02Vj91KwE3Uj25wfnSabELfxGQ2Utzs5wztyv2PGKGmvEUD5TBVBe9q0tL/CDu6r+/EZMX3MQbGhkjoRe8v37UxV0IcQAM1Ail4jGONILUV3cjQ2DphrPoLWoX0CuNCqI6ndjNgeRfdlcjgRVzHJqJHjwnahjLTMBcKEXTUYcnQMZUGgC+qQ650OC+O+aBLQaY1h6gKT67ZL+CmFF3WHYpBpIg44QPrqrv+ryG6B2vhaeWg1puQZm7+w4tKIIXebaJU=
+  - secure: bdHgX1YCTLAW+i/CGIM5jg9USJIYQKTm7wvbPW1KgxjkqWowDtB+8WV9OwQAI4APYsMVSrGa4rp/NAq4TsWtdcnOcIjMIgJLJ7d8BEwZXjBuoeW56QGU7A2OlAqVDCVBCzVPg5qks0oP9VT/QymJ4blW7bw8hoCvpLUEzETymNRQqBCrkJozurP/Yc0Fw+mAUQE1Wta0f10S505CsLcaZhqAJvybmSe+arakGfBqYHedmHQt8UEcjozptGzuuTdFo+HSGZRvMXCKOM+eQyy5qobw5+v9A8czcFWM9KdeTC/nYI/VsjJCRb3lbG2TGn7qJ4vV3Gzhf/Cl6ZCVOgZjQRtGktpM04vy0ySwJ9DQMOiKpG63MciMar4Q7hVkOa1BbSBs5y2YAUGimZnf9pHJXA3Z4ZFIQruyIhv6SpqIVyrm5Oumj6ro8RGlE7UStelI1TkwJjdORYFBQvC9wckB5TPQkuCDKtRwcnkcbcCn+PXk+lhw6dw7WN4HuTu9RmLJ1E9CC7gOOdZuoSH+PnZuJKH//uan4kesvtRDM95SBZ3PeNC/D6LmQUzye6kOjrMudt+8FuFj20taz+8Fz8nUfEW/KkxflJ1H1pyusWt2xJ+7VqnWDBmB3SkGOVc2b24w628+lOABpNQPAhRtsIjj0dNTaGJEja93LHGAye29GCI=
+  - secure: av0JaU1Vuz+FiwW/T5imFzF4cRGpssEI5UVag7I/+zG3lGjrVUqQdDS9lbVpvpbsEH+VdGFE6BN9C31zBxlcMDiW68GZTIazgKm2Nvcfc1LzfnZR5J4aEOFF4EhD70VOif1kWDlNWpB2FvCrz6mLiO/jviIrMotx4HHsIA3IzOO3YHri+IiuxowsWwBEl0iPplMR4ihgmQ5O/wmsqssORdNgrMciV8rdPfTHLoRd2xg9Y1Nig9vohemQGfdpP9ABUL1jUQ8i3eLzZi948JDMH9IZTBlad5j5FKP6hSynlzAhcTrx9BBZ78+a/t/Op9aqX/0oqKI1cO1hBsd8vOF2ncg5gn1+iBlIlXHV8DR70eRxEODJqfWtSaFxraoi14xKPZAwDi528xQA2pfGTXcQpiDbJ6Tlo/z+1ahGxUmCVQMC/V+fFb88rtRzg/OCuQdUrDs0PSzrzkasacLO0nuNEu19PKg70Pr5f2VJS7Mkn/gMVUYyPIw4bYy7fa6CLt85+XZ68jy/PwVo64YQfGbfX29w+AdNdDQ+NL/5VN40aIBIMyXVZ9V5Dg8+5MInQAPZuc+MUZZpghhB1F6dFgUVV6tjSHG/4LLP0iiYsuWAkg5FcjeEkI2AYeSgwYiXihMsMhroxVKxYaUsmFn66if9vrJhmUKwadwhMhhuZCHIwb0=
