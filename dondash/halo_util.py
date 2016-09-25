@@ -39,10 +39,13 @@ class SecurityReporter(object):
             results = scan_module.last_scan_results(agent_id, scan_type)
             raw_scan_results.append(results)
         # Process and print scan results
-        self.print_pretty_scans(raw_scan_results)
         for raw_scan_result in raw_scan_results:
             if raw_scan_result["scan"]["critical_findings_count"] != 0:
+                self.print_pretty_scans(raw_scan_results)
+                print "CRITICAL FINDINGS.  EXITING WITH STATUS 2"
                 sys.exit(2)
+        self.print_pretty_scans(raw_scan_results)
+        print "No critical failures in scans."
         return
 
     def print_pretty_scans(self, raw_scan_results):
